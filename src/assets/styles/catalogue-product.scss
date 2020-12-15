@@ -1,0 +1,36 @@
+@import './index.scss';
+
+.categories {
+  background-color: $color-light2;
+  height: 10rem;
+  max-height: 10rem;
+  top: 0;
+  transition: 0.3s;
+  width: 100%;
+  z-index: 100;
+  border-bottom: 1px solid $color-grey;
+}
+
+.card-block {
+  border-bottom-color: $color-grey;
+  transition: all 0.2s ease-in-out !important;
+  border-radius: 24px;
+  &:hover {
+    transform: translateY(-0.15rem);
+    box-shadow: none;
+    color: $color-primary;
+  }
+}
+
+.link {
+  color: $color-black;
+  font-weight: bold;
+  font-size: 0.8rem;
+  &:hover {
+    text-decoration: none;
+    color: $color-primary;
+  }
+  &.link-active {
+    color: $color-primary;
+  }
+}
