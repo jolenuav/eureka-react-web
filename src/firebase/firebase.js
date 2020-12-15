@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
-import firebaseConfig from './enviroments/enviroment-test';
+import firebaseConfig from './enviroments/enviroment-prod';
 
 firebase.initializeApp(firebaseConfig);
 
