@@ -5,219 +5,38 @@ import { withRouter } from 'react-router-dom';
 import COLORS from '../assets/styles/Colors';
 import CardCommerce from '../components/CardCommerce';
 import IconSearch from '../components/Icons/IconSearch';
-
-const listCommerces = [
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/mcdonalds-7.svg',
-    name: "Mac Donald's",
-    duration: '15-20 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/burger-king-4.svg',
-    name: 'Burguer King',
-    duration: '20-25 min',
-    payGeneric: true,
-    rate: 4.5,
-  },
-  {
-    image: 'https://cdn.worldvectorlogo.com/logos/wendys-logo-1.svg',
-    name: "Wendy's",
-    duration: '20-25 min',
-    payGeneric: false,
-    rate: 4.5,
-  },
-];
+import ClientRepository from '../firebase/repositories/ClientRepository';
 
 const Catalogue = (props) => {
   const { register, handleSubmit } = useForm();
-  const [commerces, setCommerces] = React.useState([...listCommerces]);
+  const [allCommerces, setAllCommerces] = React.useState([]);
+  const [clientRepository] = React.useState(new ClientRepository());
+  const [commerces, setCommerces] = React.useState([]);
 
-  const goToProducts = () => {
-    props.history.push('/catalogue/test');
+  const goToProducts = (id) => {
+    props.history.push(`/catalogue/${id}`);
   };
 
   const search = ({ value }) => {
-    console.log(value);
     if (!value) {
-      setCommerces([...listCommerces]);
+      setCommerces([...allCommerces]);
     } else {
-      const list = listCommerces.filter((item) =>
-        item.name.toLowerCase().includes(value.toLowerCase())
+      const list = allCommerces.filter((item) =>
+        item.data.name.toLowerCase().includes(value.toLowerCase())
       );
-      console.log(list);
       setCommerces([...list]);
     }
   };
+
+  React.useEffect(() => {
+    const loadData = async () => {
+      let resp = await clientRepository.findAll();
+      resp = resp.filter((item) => item.data.enabled);
+      setAllCommerces([...resp]);
+      setCommerces([...resp]);
+    };
+    loadData();
+  }, [clientRepository]);
   return (
     <Fragment>
       <div
@@ -239,7 +58,7 @@ const Catalogue = (props) => {
                 </InputGroup.Prepend>
                 <FormControl
                   name='value'
-                  placeholder='Buscar productos por nombre'
+                  placeholder='Buscar comercio por nombre'
                   ref={register}
                 />
               </InputGroup>
@@ -255,8 +74,16 @@ const Catalogue = (props) => {
           marginTop: '5rem',
         }}
       >
-        {commerces.map((commerce, index) => (
-          <Col onClick={goToProducts} key={index} xs='12' xl='6' className='my-2'>
+        {commerces.map((commerce) => (
+          <Col
+            onClick={() => {
+              goToProducts(commerce.id);
+            }}
+            key={commerce.id}
+            xs='12'
+            xl='6'
+            className='my-2'
+          >
             <CardCommerce commerce={commerce} />
           </Col>
         ))}

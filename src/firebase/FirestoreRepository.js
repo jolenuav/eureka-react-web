@@ -38,12 +38,16 @@ export default class FirestoreRepository {
   }
 
   async findById(id) {
-    const a = await this.collectionConnected.doc(id).get();
-    const b = await a.docs.map((doc) => ({
-      id: doc.id,
-      data: doc.data(),
-    }));
-    return b;
+    const docRef = this.collectionConnected.doc(id);
+    const doc = await docRef.get();
+    if (doc.exists) {
+      return {
+        id: doc.id,
+        data: doc.data(),
+      };
+    } else {
+      return null;
+    }
   }
 
   /**

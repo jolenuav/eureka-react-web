@@ -12,7 +12,6 @@ function App() {
   React.useEffect(() => {
     const call = async () => {
       const test = await userfirestore.findAll();
-      console.log(test);
     };
     call();
   }, [userfirestore]);

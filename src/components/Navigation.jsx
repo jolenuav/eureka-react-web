@@ -18,7 +18,7 @@ export default function Navigation() {
         </Route>
         <Route path='/catalogue' exact children={<Catalogue />} />
         <Route path='/catalogue/order' exact children={<Order />} />
-        <Route path='/catalogue/:commerce' children={<CatalogueProducts />} />
+        <Route path='/catalogue/:commerceId' children={<CatalogueProducts />} />
       </Switch>
     </Router>
   );

@@ -18,11 +18,11 @@ export default function CardCommerce(props) {
         >
           <Image
             style={{
-              maxWidth: '5rem',
-              maxHeight: '5rem',
+              width: '5rem',
+              height: '5rem',
             }}
             roundedCircle
-            src={props.commerce.image}
+            src={props.commerce.data.image}
           />
         </Col>
         <Col
@@ -31,9 +31,9 @@ export default function CardCommerce(props) {
           style={{ width: '80%' }}
         >
           <div className='font-weight-bold m-0' style={{ fontSize: '1.5rem' }}>
-            {props.commerce.name}
+            {props.commerce.data.name}
           </div>
-          {props.commerce.payGeneric ? (
+          {props.commerce.data.payGeneric ? (
             <div className='d-flex flex-row align-items-center txt-grey'>
               <IconCreditCard
                 width='1rem'
@@ -48,10 +48,10 @@ export default function CardCommerce(props) {
             <></>
           )}
           <div className='txt-grey' style={{ fontSize: '0.8rem' }}>
-            {props.commerce.duration}
+            {props.commerce.data.duration} min
           </div>
           <div className='d-flex flex-row align-items-center txt-primary'>
-            <div className='pr-2'>{props.commerce.rate}</div>
+            <div className='pr-2'>{props.commerce.data.rate}</div>
             <IconStar width='1rem' height='1rem' color={COLORS.colorPrimary} />
           </div>
         </Col>
