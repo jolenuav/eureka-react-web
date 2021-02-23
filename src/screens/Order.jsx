@@ -9,6 +9,7 @@ import COLORS from '../assets/styles/Colors';
 import ClientRepository from '../firebase/repositories/ClientRepository';
 import ProductRepository from '../firebase/repositories/ProductRepository';
 import { addtoOrder, updateOrder } from '../redux/ducks/OrderDucks';
+import Loader from './Loader';
 
 function Order(props) {
   // CONST
@@ -20,6 +21,7 @@ function Order(props) {
   // HOOKS
   const [commerce, setCommerce] = React.useState(null);
   const [counter, setCounter] = React.useState(1);
+  const [finishLoad, setFinishLoad] = React.useState(false);
   const [clientRepository] = React.useState(new ClientRepository());
   const [productRepository] = React.useState(new ProductRepository());
   const [marginTop, setMarginTop] = React.useState('0rem');
@@ -38,7 +40,9 @@ function Order(props) {
       amount: Number(data.counter) * product.data.price,
       observation: data.observation,
     };
-    const orderExist = orderState.orders.find((order) => order.product.id === productId);
+    const orderExist = orderState.orders.find(
+      (order) => order.product.id === productId
+    );
     if (orderExist) {
       dispatch(updateOrder(order));
     } else {
@@ -76,7 +80,10 @@ function Order(props) {
       const productById = await productRepository.findById(productId);
       setCommerce(commerceById);
       setProduct(productById);
-      const order = orderState.orders.find((order) => order.product.id === productId);
+      setFinishLoad(true);
+      const order = orderState.orders.find(
+        (order) => order.product.id === productId
+      );
       if (order) {
         setValue('observation', order.observation);
         setCounter(order.qty);
@@ -88,9 +95,18 @@ function Order(props) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [clientRepository, commerceId, productId, productRepository]);
+  }, [
+    clientRepository,
+    commerceId,
+    orderState.orders,
+    productId,
+    productRepository,
+    setValue,
+  ]);
 
-  if (!commerce || !product) {
+  if (!finishLoad) {
+    return <Loader />;
+  } else if (!commerce || !product) {
     return <></>;
   } else {
     return (

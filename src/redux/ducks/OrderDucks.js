@@ -26,9 +26,7 @@ export function orderReducer(state = initialState, action) {
       return { ...state, orders, totalAmount };
 
     case UPDATE_ORDER:
-      console.log('UPDATE ORDER', action.order);
       totalAmount = 0;
-      console.log([...orders], totalAmount);
       orders = orders.map((order) => {
         if (order.product.id === action.order.product.id) {
           order = action.order;
@@ -36,7 +34,6 @@ export function orderReducer(state = initialState, action) {
         totalAmount += order.amount;
         return order;
       });
-      console.log([...orders], totalAmount);
 
       return { ...state, orders, totalAmount };
 

@@ -1,24 +1,18 @@
 import React, { Fragment } from 'react';
-import {
-  Card,
-  Col,
-  Form,
-  FormControl,
-  Image,
-  InputGroup,
-} from 'react-bootstrap';
+import { Card, Col, Form, FormControl, Image, InputGroup } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { AiOutlineShopping } from 'react-icons/ai';
 import { BsCreditCard } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
 import { FiArrowLeft } from 'react-icons/fi';
-import { AiOutlineShopping } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 import { useParams, withRouter } from 'react-router-dom';
 import '../assets/styles/catalogue-product.scss';
 import COLORS from '../assets/styles/Colors';
 import IconSearch from '../components/Icons/IconSearch';
 import ClientRepository from '../firebase/repositories/ClientRepository';
 import ProductRepository from '../firebase/repositories/ProductRepository';
+import Loader from './Loader';
 
 const CatalogueProducts = (props) => {
   // CONST
@@ -31,6 +25,7 @@ const CatalogueProducts = (props) => {
   const [allProducts, setAllProducts] = React.useState([]);
   const [clientRepository] = React.useState(new ClientRepository());
   const [commerce, setCommerce] = React.useState(null);
+  const [finishLoad, setFinishLoad] = React.useState(false);
   const [imgOpacity, setImgOpacity] = React.useState(1);
   const [marginTop, setMarginTop] = React.useState('16rem');
   const [productRepository] = React.useState(new ProductRepository());
@@ -99,7 +94,6 @@ const CatalogueProducts = (props) => {
   // EFFECT
   React.useEffect(() => {
     const loadData = async () => {
-      console.log(orderState);
       const commerceById = await clientRepository.findById(commerceId);
       setCommerce(commerceById);
       const listProducts = [];
@@ -118,12 +112,21 @@ const CatalogueProducts = (props) => {
           setAllProducts(listProducts);
           setProducts([...listProducts]);
         }
+        setFinishLoad(true);
       });
     };
     loadData();
-  }, [clientRepository, commerceId, productRepository, setAllProducts]);
+  }, [
+    clientRepository,
+    commerceId,
+    orderState,
+    productRepository,
+    setAllProducts,
+  ]);
 
-  if (!commerce || allProducts.length === 0) {
+  if (!finishLoad) {
+    return <Loader />;
+  } else if (!commerce || allProducts.length === 0) {
     return <></>;
   } else {
     return (
@@ -333,10 +336,14 @@ const CatalogueProducts = (props) => {
               >
                 <span className='d-flex flex-row'>
                   <AiOutlineShopping size='1.5rem' />
-                  <div className='counter-circle'>{orderState.orders.length}</div>
+                  <div className='counter-circle'>
+                    {orderState.orders.length}
+                  </div>
                 </span>
                 Ver mi pedido
-                <span style={{ fontWeight: 'normal' }}>${orderState.totalAmount}</span>
+                <span style={{ fontWeight: 'normal' }}>
+                  ${orderState.totalAmount}
+                </span>
               </button>
             </Col>
           </div>
