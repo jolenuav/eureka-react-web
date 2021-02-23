@@ -9,8 +9,10 @@ import {
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { BsCreditCard } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
 import { FiArrowLeft } from 'react-icons/fi';
+import { AiOutlineShopping } from 'react-icons/ai';
 import { useParams, withRouter } from 'react-router-dom';
 import '../assets/styles/catalogue-product.scss';
 import COLORS from '../assets/styles/Colors';
@@ -22,7 +24,8 @@ const CatalogueProducts = (props) => {
   // CONST
   const { handleSubmit, register } = useForm();
   const { commerceId } = useParams();
-  const heightWindow = window.innerHeight;
+  const heightWindow = window.innerHeight - 58.3;
+  const orderState = useSelector((state) => state.order);
 
   // HOOKS
   const [allProducts, setAllProducts] = React.useState([]);
@@ -35,9 +38,9 @@ const CatalogueProducts = (props) => {
   const [tabsOpacity, setTabsOpacity] = React.useState(0);
   const [height, setHeight] = React.useState(heightWindow);
 
+  // FUNCTIONS
   const search = ({ value }) => {
     if (!value || value.trim() === '') {
-      console.log(allProducts);
       setProducts([...allProducts]);
     } else {
       const listProducts = [];
@@ -65,13 +68,11 @@ const CatalogueProducts = (props) => {
     props.history.push('/catalogue');
   };
 
-  const goToOrder = () => {
-    props.history.push('/catalogue/order');
+  const goToOrder = (productId) => {
+    props.history.push(`/catalogue/order/${commerceId}/${productId}`);
   };
 
   const handleScroll = (e) => {
-    console.log(window.innerHeight);
-    console.log(window.outerHeight);
     if (document.getElementById('list-container').scrollTop > 50) {
       setImgOpacity(0);
       setTabsOpacity(1);
@@ -95,8 +96,10 @@ const CatalogueProducts = (props) => {
     document.getElementById(id).classList.add('link-active');
   };
 
+  // EFFECT
   React.useEffect(() => {
     const loadData = async () => {
+      console.log(orderState);
       const commerceById = await clientRepository.findById(commerceId);
       setCommerce(commerceById);
       const listProducts = [];
@@ -112,7 +115,6 @@ const CatalogueProducts = (props) => {
           });
         }
         if (index === commerceById.data.sections.length - 1) {
-          console.log(listProducts);
           setAllProducts(listProducts);
           setProducts([...listProducts]);
         }
@@ -257,7 +259,9 @@ const CatalogueProducts = (props) => {
                     xs='12'
                     xl='6'
                     className='my-2 p-xs-0'
-                    onClick={goToOrder}
+                    onClick={() => {
+                      goToOrder(product.id);
+                    }}
                   >
                     <Card>
                       <Card.Body className='d-flex flex-row justify-content-between'>
@@ -306,6 +310,39 @@ const CatalogueProducts = (props) => {
             </Fragment>
           ))}
         </div>
+        {orderState.orders.length > 0 ? (
+          <div
+            className='w-100 p-2 d-flex justify-content-center position-fixed'
+            style={{
+              height: '3.5rem',
+              bottom: 0,
+              backgroundColor: COLORS.colorLight2,
+              borderTop: `1px solid ${COLORS.colorGrey}`,
+            }}
+          >
+            <Col xs='12' xl='4'>
+              <button
+                className='btn w-100 d-flex flex-row justify-content-between alignt-item-center'
+                style={{
+                  backgroundColor: COLORS.colorPrimary,
+                  borderRadius: '50px',
+                  color: COLORS.colorWhite,
+                  fontWeight: 'bold',
+                }}
+                type='submit'
+              >
+                <span className='d-flex flex-row'>
+                  <AiOutlineShopping size='1.5rem' />
+                  <div className='counter-circle'>{orderState.orders.length}</div>
+                </span>
+                Ver mi pedido
+                <span style={{ fontWeight: 'normal' }}>${orderState.totalAmount}</span>
+              </button>
+            </Col>
+          </div>
+        ) : (
+          <></>
+        )}
       </Fragment>
     );
   }

@@ -1,42 +1,44 @@
 // CONSTANTS
 const ADD_TO_ORDER = 'ADD_TO_ORDER';
-const MINUS_TOTAL_AMOUNT = 'MINUS_TOTAL_AMOUNT';
-const SUM_TOTAL_AMOUNT = 'SUM_TOTAL_AMOUNT';
+const UPDATE_ORDER = 'UPDATE_ORDER';
 
 // STATE
 const initialState = {
   totalAmount: 0,
-  order: [],
+  orders: [],
 };
 
 // ACTIONS
 export function addtoOrder(order) {
   return { type: ADD_TO_ORDER, order };
 }
-
-export function minusTotalAmoun(amount) {
-  return { type: MINUS_TOTAL_AMOUNT, amount };
-}
-
-export function sumTotalAmoun(amount) {
-  return { type: MINUS_TOTAL_AMOUNT, amount };
+export function updateOrder(order) {
+  return { type: UPDATE_ORDER, order };
 }
 
 // REDUCERS
 export function orderReducer(state = initialState, action) {
-  let { order, amount } = state;
+  let { orders, totalAmount } = state;
   switch (action.type) {
     case ADD_TO_ORDER:
-      order.push(action.push);
-      return { ...state, order };
+      orders.push(action.order);
+      totalAmount += action.order.amount;
+      return { ...state, orders, totalAmount };
 
-    case MINUS_TOTAL_AMOUNT:
-      amount -= action.amount;
-      return { ...state, totalAmount: amount };
+    case UPDATE_ORDER:
+      console.log('UPDATE ORDER', action.order);
+      totalAmount = 0;
+      console.log([...orders], totalAmount);
+      orders = orders.map((order) => {
+        if (order.product.id === action.order.product.id) {
+          order = action.order;
+        }
+        totalAmount += order.amount;
+        return order;
+      });
+      console.log([...orders], totalAmount);
 
-    case SUM_TOTAL_AMOUNT:
-      amount += action.amount;
-      return { ...state, totalAmount: amount };
+      return { ...state, orders, totalAmount };
 
     default:
       return state;

@@ -17,8 +17,8 @@ export default function Navigation() {
           <Redirect to={{ pathname: '/catalogue' }} />
         </Route>
         <Route path='/catalogue' exact children={<Catalogue />} />
-        <Route path='/catalogue/order' exact children={<Order />} />
-        <Route path='/catalogue/:commerceId' children={<CatalogueProducts />} />
+        <Route path='/catalogue/:commerceId' exact children={<CatalogueProducts />} />
+        <Route path='/catalogue/order/:commerceId/:productId' exact children={<Order />} />
       </Switch>
     </Router>
   );
