@@ -1,5 +1,12 @@
 import React, { Fragment } from 'react';
-import { Card, Col, Form, FormControl, Image, InputGroup } from 'react-bootstrap';
+import {
+  Card,
+  Col,
+  Form,
+  FormControl,
+  Image,
+  InputGroup,
+} from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { BsCreditCard } from 'react-icons/bs';
@@ -18,7 +25,7 @@ const CatalogueProducts = (props) => {
   // CONST
   const { handleSubmit, register } = useForm();
   const { commerceId } = useParams();
-  const heightWindow = window.innerHeight - 58.3;
+  const heightWindow = window.innerHeight;
   const orderState = useSelector((state) => state.order);
 
   // HOOKS
@@ -27,7 +34,7 @@ const CatalogueProducts = (props) => {
   const [commerce, setCommerce] = React.useState(null);
   const [finishLoad, setFinishLoad] = React.useState(false);
   const [imgOpacity, setImgOpacity] = React.useState(1);
-  const [marginTop, setMarginTop] = React.useState('16rem');
+  const [marginTop, setMarginTop] = React.useState('15rem');
   const [productRepository] = React.useState(new ProductRepository());
   const [products, setProducts] = React.useState([]);
   const [tabsOpacity, setTabsOpacity] = React.useState(0);
@@ -68,18 +75,22 @@ const CatalogueProducts = (props) => {
   };
 
   const handleScroll = (e) => {
+    let heigthTotal = heightWindow;
+    if (orderState.orders.length > 0) {
+      heigthTotal = heightWindow - 58.3;
+    }
     if (document.getElementById('list-container').scrollTop > 50) {
       setImgOpacity(0);
       setTabsOpacity(1);
-      setMarginTop('11rem');
-      const remPx = 11 / 0.06;
-      setHeight(heightWindow - remPx);
+      setMarginTop('10rem');
+      const remPx = 9.5 / 0.06;
+      setHeight(heigthTotal - remPx);
     } else {
       setImgOpacity(1);
       setTabsOpacity(0);
-      setMarginTop('16rem');
-      const remPx = 16 / 0.06;
-      setHeight(heightWindow - remPx);
+      setMarginTop('15rem');
+      const remPx = 14.5 / 0.06;
+      setHeight(heigthTotal - remPx);
     }
   };
 
@@ -119,6 +130,8 @@ const CatalogueProducts = (props) => {
   }, [
     clientRepository,
     commerceId,
+    height,
+    heightWindow,
     orderState,
     productRepository,
     setAllProducts,
@@ -149,14 +162,23 @@ const CatalogueProducts = (props) => {
               color={COLORS.colorLight2}
               onClick={goToCatalogue}
             />
-            <div className='txt-light font-weight-bold d-flex flex-row align-items-center'>
+            <div
+              className='txt-light font-weight-bold d-flex flex-row align-items-center'
+              style={{
+                display: imgOpacity === 0 ? 'none' : 'block',
+              }}
+            >
               <h2 className='pr-2 m-0'>{commerce.data.name}</h2>
               <div className='pr-2'>4.5</div>
               <FaStar size='1rem' color={COLORS.colorLight2} />
             </div>
             <div
               className='pb-2 txt-light d-flex flex-row align-items-center'
-              style={{ fontSize: '0.8rem', lineHeight: '1.2rem' }}
+              style={{
+                fontSize: '0.8rem',
+                lineHeight: '1.2rem',
+                display: imgOpacity === 0 ? 'none' : 'block',
+              }}
             >
               <div className='pr-3'>{commerce.data.duration} min</div>
               <BsCreditCard size='1rem' color={COLORS.colorLight2} />
@@ -186,7 +208,7 @@ const CatalogueProducts = (props) => {
             </Form>
           </div>
           <div
-            className='p-2 categories d-flex flex-column position-absolute'
+            className='p-2 categories d-flex flex-column position-absolute shadow-4 '
             style={{
               opacity: tabsOpacity,
             }}
@@ -315,12 +337,11 @@ const CatalogueProducts = (props) => {
         </div>
         {orderState.orders.length > 0 ? (
           <div
-            className='w-100 p-2 d-flex justify-content-center position-fixed'
+            className='w-100 p-2 d-flex justify-content-center position-fixed shadow-top'
             style={{
               height: '3.5rem',
               bottom: 0,
-              backgroundColor: COLORS.colorLight2,
-              borderTop: `1px solid ${COLORS.colorGrey}`,
+              backgroundColor: COLORS.colorWhite
             }}
           >
             <Col xs='12' xl='4'>
@@ -333,6 +354,9 @@ const CatalogueProducts = (props) => {
                   fontWeight: 'bold',
                 }}
                 type='submit'
+                onClick={() => {
+                  props.history.push(`/catalogue/myorder`);
+                }}
               >
                 <span className='d-flex flex-row'>
                   <AiOutlineShopping size='1.5rem' />

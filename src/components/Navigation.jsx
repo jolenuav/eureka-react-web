@@ -8,6 +8,7 @@ import {
 import Catalogue from '../screens/Catalogue';
 import CatalogueProducts from '../screens/CatalogueProducts';
 import Order from '../screens/Order';
+import MyOrder from '../screens/payment-step/MyOrder';
 
 export default function Navigation() {
   return (
@@ -17,8 +18,17 @@ export default function Navigation() {
           <Redirect to={{ pathname: '/catalogue' }} />
         </Route>
         <Route path='/catalogue' exact children={<Catalogue />} />
-        <Route path='/catalogue/:commerceId' exact children={<CatalogueProducts />} />
-        <Route path='/catalogue/order/:commerceId/:productId' exact children={<Order />} />
+        <Route path='/catalogue/myorder' children={<MyOrder />} />
+        <Route
+          path='/catalogue/:commerceId'
+          exact
+          children={<CatalogueProducts />}
+        />
+        <Route
+          path='/catalogue/order/:commerceId/:productId'
+          exact
+          children={<Order />}
+        />
       </Switch>
     </Router>
   );

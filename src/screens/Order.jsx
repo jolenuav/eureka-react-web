@@ -8,7 +8,7 @@ import { useHistory, useParams, withRouter } from 'react-router-dom';
 import COLORS from '../assets/styles/Colors';
 import ClientRepository from '../firebase/repositories/ClientRepository';
 import ProductRepository from '../firebase/repositories/ProductRepository';
-import { addtoOrder, updateOrder } from '../redux/ducks/OrderDucks';
+import { addtoOrder } from '../redux/ducks/OrderDucks';
 import Loader from './Loader';
 
 function Order(props) {
@@ -40,14 +40,7 @@ function Order(props) {
       amount: Number(data.counter) * product.data.price,
       observation: data.observation,
     };
-    const orderExist = orderState.orders.find(
-      (order) => order.product.id === productId
-    );
-    if (orderExist) {
-      dispatch(updateOrder(order));
-    } else {
-      dispatch(addtoOrder(order));
-    }
+    dispatch(addtoOrder(order));
     history.goBack();
   };
 
@@ -81,28 +74,13 @@ function Order(props) {
       setCommerce(commerceById);
       setProduct(productById);
       setFinishLoad(true);
-      const order = orderState.orders.find(
-        (order) => order.product.id === productId
-      );
-      if (order) {
-        setValue('observation', order.observation);
-        setCounter(order.qty);
-        setValue('counter', order.qty);
-      }
     };
     loadData();
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [
-    clientRepository,
-    commerceId,
-    orderState.orders,
-    productId,
-    productRepository,
-    setValue,
-  ]);
+  }, [clientRepository, commerceId, productId, productRepository, setValue]);
 
   if (!finishLoad) {
     return <Loader />;
